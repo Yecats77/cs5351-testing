@@ -23,7 +23,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Homepage<span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="{{ url_for('index') }}">Homepage<span class="sr-only">(current)</span></a></li>
                 <li class="{% block formula_class %}{% endblock %}"><a href="{{ url_for('formula') }}">Forum</a></li>
                 <li class="{% block source_class %}{% endblock %}"><a href="{{ url_for('source') }}">Sources</a></li>
                 {% if email %}
