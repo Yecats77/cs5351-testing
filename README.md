@@ -1,11 +1,3 @@
-# cs5351-testing
+# PythonOnlineForumPlatform
 
-## Shaobin Zhang commits this change
-
-hellohello哇大家
-
-## uu this is dazhi
-
-#2333333333333
-
-## test
+Refer to `https://github.com/qiguanjie/OnlineForumPlatform`
