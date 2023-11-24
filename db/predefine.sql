@@ -15,7 +15,7 @@ create table OnlineForumPlatform.UserInformation
 );
 
 -- Drop user account
-drop user 'username'
+drop user 'sqluser';
 
 -- create table saving issues
 create table OnlineForumPlatform.Issue

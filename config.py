@@ -6,7 +6,7 @@ DEBUG = False
 
 SECRET_KEY = os.urandom(24)
 
-db = pymysql.connect(host='localhost', user='sqluser', password='password', db='OnlineForumPlatform', port=3306)
+db = pymysql.connect(host='localhost', user='root', password='123456', db='OnlineForumPlatform', port=3306)
 
 print(db)
 
