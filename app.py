@@ -1,6 +1,7 @@
 import random
 import os
 from flask import *
+import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import db
 import time
@@ -39,7 +40,7 @@ def register():
         if password_1 != password_2:
             flash("The passwords filled in twice are inconsistent!")
             return render_template('register.html')
-        password = generate_password_hash(password_1, method="pbkdf2:sha256", salt_length=8)
+        password = generate_password_hash(password_1, method="pbkdf2:sha256", salt_length=10)
         try:
             cur = db.cursor()
             sql = "select * from UserInformation where email = '%s'"%email
