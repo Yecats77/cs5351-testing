@@ -30,6 +30,9 @@ def register():
         password_1 = request.form.get('password_1')
         password_2 = request.form.get('password_2')
         phone = request.form.get('phone')
+        if len(password_1) < 8 or len(password_1) > 25 :
+            flash("The length of password input must be in range : 8~25 ")
+            return render_template('register.html')
         if not all([email,nickname,password_1,password_2,phone]):
             flash("The information is incomplete, please fill in the information completely")
             return render_template('register.html')
