@@ -6,6 +6,8 @@ from config import db
 import time
 import config
 from decorators import login_limit
+import requests
+import bs4
 
 app = Flask(__name__)
 
@@ -123,6 +125,7 @@ def gengenerateID():
         re += chr(random.randint(65, 90))
     return re
 
+
 # Post Issue
 @app.route('/post_issue', methods=['GET', 'POST'])
 @login_limit
@@ -132,7 +135,7 @@ def post_issue():
     if request.method == 'POST':
         # Get issue info from editor 
         title = request.form.get('title')
-        comment = request.form.get('editorValue')
+        comment = request.form.get('editorValue')   
         email = session.get('email')
         issue_time = time.strftime("%Y-%m-%d %H:%M:%S")
         try:
@@ -162,6 +165,29 @@ def post_issue():
             return redirect(url_for('formula'))
         except Exception as e:
             raise e
+
+# Auto Review
+@app.route('/auto_review',methods=['GET', 'POST'])
+@login_limit
+def auto_review(): # string 
+    if request.method == 'GET':
+        return render_template('auto_review.html',input=None)
+    if request.method == 'POST':
+        comment = request.form.get('editorValue')
+        res=""  
+        soup = bs4.BeautifulSoup(comment, 'html.parser')
+        code=soup.getText()
+        g.input=code
+        try:
+            API_URL = "https://api-inference.huggingface.co/models/microsoft/codereviewer"
+            headers = {"Authorization": "Bearer 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"}
+            response = requests.post(API_URL, headers=headers, json={"inputs": code})
+            res=response.json()
+        except Exception as e:
+            res=e
+        return render_template('auto_review_res.html',code=code,res=res)
+    
+
 
 # Forum Page
 @app.route('/formula')

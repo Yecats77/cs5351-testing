@@ -1,3 +1,4 @@
+-- Active: 1700565902361@@127.0.0.1@3306@onlineforumplatform
 -- create DB
 create database OnlineForumPlatform;
 

@@ -1,0 +1,30 @@
+.res_content{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+#page_header{
+    text-align: center;
+}
+
+.res_info{
+    font-size: 18px;
+}
+
+.res_td{
+    width: 10%;
+}
+
+.res_td_content{
+    width: 70%;
+}
+
+.res_tr{
+    height: 50px;
+}
+
+#res_butt{
+    margin-bottom: 60px;
+    float: center;
+    height: 35px;
+}

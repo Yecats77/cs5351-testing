@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Auto Review Result
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/auto_res.css">
+{% endblock %}
+
+{% block content %}
+<div class="res_content">
+    <div class="page-header" id="page_header">
+      <h1>Auto Review<small>Result</small></h1>
+    </div>
+    <div class="res_info">
+        <table>
+            <tr class="res_tr">
+                <td class="res_td">
+                    Code:
+                </td>
+                <td class="res_td_content">
+                    {{ code }}
+                </td>
+            </tr>
+            <tr class="res_tr">
+                <td class="res_td">
+                    Result:
+                </td>
+                <td class="res_td_content">
+                    {{ res }}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="res_butt">
+        <button type="button" class="btn btn-default" onclick="location.href='{{ url_for('auto_review') }}'">Back to Auto Review</button>
+    </div>
+</div>
+{% endblock %}

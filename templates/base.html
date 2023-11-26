@@ -26,9 +26,6 @@
                 <li class="active"><a href="{{ url_for('index') }}">Homepage<span class="sr-only">(current)</span></a></li>
                 <li class="{% block formula_class %}{% endblock %}"><a href="{{ url_for('formula') }}">Forum</a></li>
                 <li class="{% block source_class %}{% endblock %}"><a href="{{ url_for('source') }}">Sources</a></li>
-                {% if email %}
-                  <li class="{% block post_file_class %}{% endblock %}"><a href="{{ url_for('post_file') }}">Upload File</a></li>
-                {% endif %}
 
               </ul>
               <form class="navbar-form navbar-left">
@@ -40,6 +37,8 @@
               <ul class="nav navbar-nav navbar-right">
                 {% if email %}
                     <li class="{% block post_issue_class %}{% endblock %}"><a href="{{ url_for('post_issue') }}">Post Issue</a></li>
+                    <li class="{% block auto_review_class %}{% endblock %}"><a href="{{ url_for('auto_review') }}">Auto Review</a></li>
+                    <li class="{% block post_file_class %}{% endblock %}"><a href="{{ url_for('post_file') }}">Upload File</a></li>
                     <li class=""><a href="{{ url_for('logout') }}">Log out</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ nickname }} <span class="caret"></span></a>
