@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="OnlineForumPlatform@localhost" uuid="9446b7ab-2885-4d54-9dba-fe4349fe7557">
+    <data-source source="LOCAL" name="onlineforumplatform@localhost" uuid="7a47aa44-da3a-4e4b-b8d2-6c912cb181e5">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/OnlineForumPlatform</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/onlineforumplatform</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

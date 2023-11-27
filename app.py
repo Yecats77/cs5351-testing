@@ -1,7 +1,7 @@
 import random
 import os
 from flask import *
-import hashlib
+import configparser
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import db
 import time
@@ -13,6 +13,15 @@ app = Flask(__name__)
 # import config
 app.config.from_object(config)
 
+#crypto
+keyconfig = configparser.ConfigParser()
+keyconfig.read('secret_key.ini')
+secret_key = keyconfig.get('Credentials', 'secret_key')
+def xor_encrypt_decrypt(text, key):
+    text_bytes = text.encode()
+    key_bytes = key.encode()
+    encrypted_bytes = bytes([a ^ b for a, b in zip(text_bytes, key_bytes)])
+    return encrypted_bytes.decode()
 
 # Homepage
 @app.route('/')
@@ -41,6 +50,7 @@ def register():
             flash("The passwords filled in twice are inconsistent!")
             return render_template('register.html')
         password = generate_password_hash(password_1, method="pbkdf2:sha256", salt_length=10)
+
         try:
             cur = db.cursor()
             sql = "select * from UserInformation where email = '%s'"%email
@@ -52,9 +62,12 @@ def register():
                 return render_template('register.html')
             else:
                 create_time = time.strftime("%Y-%m-%d %H:%M:%S")
-                sql = "insert into UserInformation(email, nickname, password, type, create_time, phone) VALUES ('%s','%s','%s','0','%s','%s')" %(email,nickname,password,create_time,phone)
+                encry_nickname = xor_encrypt_decrypt(nickname, secret_key)
+                encry_phone = xor_encrypt_decrypt(phone, secret_key)
+                sql = "insert into UserInformation(email, nickname, password, type, create_time, phone) VALUES (%s, %s, %s, '0', %s, %s)"
                 db.ping(reconnect=True)
-                cur.execute(sql)
+                cur.execute(sql, (email, encry_nickname, password, create_time, encry_phone))
+
                 db.commit()
                 cur.close()
                 return redirect(url_for('index'))
@@ -107,7 +120,7 @@ def login_status():
             cur.execute(sql)
             result = cur.fetchone()
             if result:
-                return {'email': email,'nickname': result[0] ,'user_type': result[1]}
+                return {'email': email,'nickname': xor_encrypt_decrypt(result[0], secret_key) ,'user_type': result[1]}
                 # return render_template('register.html', email=email,nickname=result[0] ,user_type=result[1])
         except Exception as e:
             raise e
@@ -177,8 +190,16 @@ def formula():
             db.ping(reconnect=True)
             cur.execute(sql)
             issue_information = cur.fetchall()
+
+            decrypted_issue_information = []
+            for issue in issue_information:
+                encrypted_nickname = issue[2]  # nickname字段在issue信息元组中的索引为2
+                decrypted_nickname = xor_encrypt_decrypt(encrypted_nickname, secret_key)
+                decrypted_issue = issue[:2] + (decrypted_nickname,) + issue[3:]  # 替换解密后的nickname字段
+                decrypted_issue_information.append(decrypted_issue)
+
             cur.close()
-            return render_template('formula.html', issue_information = issue_information)
+            return render_template('formula.html', issue_information = decrypted_issue_information)
         except Exception as e:
             raise e
 
@@ -242,10 +263,16 @@ def personal():
             db.ping(reconnect=True)
             cur.execute(sql)
             personal_info = cur.fetchone()
+            #decode
+            personal_info_list = list(personal_info)
+            personal_info_list[1] = xor_encrypt_decrypt(personal_info_list[1], secret_key)
+            print(personal_info_list[4])
+            personal_info_list[4] = xor_encrypt_decrypt(personal_info_list[4], secret_key)
+            print(personal_info_list[4])
         except Exception as e:
             print('Exception:', e)
             raise e
-        return render_template('personal.html',personal_info = personal_info)
+        return render_template('personal.html',personal_info = personal_info_list)
 
 # Change Password
 @app.route('/change_password',methods=['GET','POST'])
@@ -362,8 +389,16 @@ def source():
             db.ping(reconnect=True)
             cur.execute(sql)
             files = cur.fetchall()
+
+            decrypted_files = []
+            for file in files:
+                encrypted_nickname = file[4]
+                decrypted_nickname = xor_encrypt_decrypt(encrypted_nickname, secret_key)
+                decrypted_file = file[:4] + (decrypted_nickname,)
+                decrypted_files.append(decrypted_file)
+
             cur.close()
-            return render_template('source.html',files = files)
+            return render_template('source.html',files = decrypted_files)
         except Exception as e:
             raise e
 
