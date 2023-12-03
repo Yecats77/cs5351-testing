@@ -19,9 +19,9 @@ Forum
                 <li class="issue_list_li">
                     <div class="issue_div">
                         <div class="issue_content">
-                            <h3>
+                            <a href="{{ url_for('issue_detail',Ino = issue[0]) }}">
                                 {{ issue[4] }}
-                            </h3>
+                            </a>
                             <article>
                                 {{ issue[5]|safe }}
                             </article>
