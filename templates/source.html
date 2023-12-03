@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-资源专区
+
 {% endblock %}
 
 {% block css %}
@@ -11,7 +11,7 @@
 {% block content %}
 <div class="source_content">
     <div class="page-header" id="page_header">
-      <h1>资源专区<small>Resources Zone</small></h1>
+      <h1>Resources Zone</h1>
     </div>
     <div class="source_div">
         <ul class="source_ul">
@@ -30,10 +30,10 @@
                         </div>
                         <div class="author_info">
                             <p class="post-info">
-                                <span>上传者：{{ file[4] }}</span>&emsp;&emsp;
-                                <span>上传时间：{{ file[3] }}</span>&emsp;
-                                <span><a href="{{ url_for('online_file',Fno = file[0]) }}">在线查看</a></span>&emsp;
-                                <span><a href="{{ url_for('download',Fno = file[0]) }}">下载文件</a></span>
+                                <span>Author:{{ file[4] }}</span>&emsp;&emsp;
+                                <span>Upload time:{{ file[3] }}</span>&emsp;
+                                <span><a href="{{ url_for('online_file',Fno = file[0]) }}">View online</a></span>&emsp;
+                                <span><a href="{{ url_for('download',Fno = file[0]) }}">Download</a></span>
                             </p>
                         </div>
                     </div>
